@@ -1,6 +1,6 @@
 #!/bin/bash
-if [ $# -ne 9 ]
-   then echo;echo "allinone.sh ----- HELP ------";echo "allinone arguments required";echo "allinone.sh LinuxHostName WindowsHostName InternalDomain OpenShiftPublicURL AppPublicURL UserName Password";echo "allinone.sh openshift winnode01 ncc9.com openshift.ncc9.com apps.openshift.com glennswest SuperLamb1 rhnusername rhnpassword";exit
+if [ $# -ne 7 ]
+   then echo;echo "allinone.sh ----- HELP ------";echo "allinone arguments required";echo "allinone.sh LinuxHostName WindowsHostName InternalDomain OpenShiftPublicURL AppPublicURL UserName Password";echo "allinone.sh openshift winnode01 ncc9.com openshift.ncc9.com apps.openshift.com glennswest SuperLamb1";exit
 fi
 
 export LinuxHostName=$1
@@ -10,8 +10,6 @@ export OpenShiftPublicURL=$4
 export AppPublicURL=$5
 export theUserName=$6
 export thePassword=$7
-export rhnusername=$8
-export rhnpassword=$9
 export theRepo="https://github.com/openshift/openshift-windows"
 export AUSERNAME=$theUserName
 export LinuxInternalIP=`nslookup $LinuxHostName | awk '/^Address: / { print $2 ; exit }'`
@@ -98,8 +96,6 @@ new_nodes
 new_masters
 
 [OSEv3:vars]
-oreg_auth_user=${rhnusername}
-oreg_auth_password=${rhnpassword}
 ansible_ssh_user=root
 openshift_use_openshift_sdn=false
 os_sdn_network_plugin_name=cni
@@ -155,7 +151,6 @@ ansible-playbook  ~/openshift-ansible/playbooks/prerequisites.yml < /dev/null
 ansible-playbook  ~/openshift-ansible/playbooks/deploy_cluster.yml < /dev/null || true
 ansible-playbook  ~/postinstall.yml
 
-yum -y install atomic-openshift-clients
 oc adm policy add-cluster-role-to-user cluster-admin ${theUserName}
 EOF
 
