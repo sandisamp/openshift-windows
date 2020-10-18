@@ -51,10 +51,10 @@ subscription-manager repos --enable="rhel-7-server-rpms" \
 yum -y update
 yum -y install gcc wget git net-tools atomic-openshift-utils git net-tools bind-utils iptables-services bridge-utils bash-completion httpd-tools nodejs qemu-img kexec-tools sos psacct docker-1.13.1 ansible libffi-devel yum-utils
 #yum install -y openshift-ansible
-git clone https://github.com/openshift/openshift-ansible.git ~/openshift-ansible
-cd ~/openshift-ansible
-git checkout release-3.11
-git pull
+# git clone https://github.com/openshift/openshift-ansible.git ~/openshift-ansible
+# cd ~/openshift-ansible
+# git checkout release-3.11
+# git pull
 cd ~
 yum -y install docker-1.13.1
 yum -y install PyYAML
